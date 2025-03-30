@@ -23,14 +23,25 @@ const App = () => {
     })
   }, [])
 
-    const router = createBrowserRouter(createRoutesFromElements(
-      <Route path='/' element={<MainLayout />}>
-        <Route index element={<HomePage notes={notes} />} />
-        <Route path='/add-note' element={<AddNotePage />} />
-        <Route path='/edit-note/:id' element={<EditNotePage />} />
-        <Route path='note-detail/:id' element={<NoteDetailPage />} />
-      </Route>
-    ))
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage notes={notes} />,
+          loader: async () => {
+            const response = await axios.get("http://127.0.0.1:8000/notes/");
+            return response.data;
+          }
+        },
+        { path: "add-note", element: <AddNotePage /> },
+        { path: "edit-note/:id", element: <EditNotePage /> },
+        { path: "note-detail/:id", element: <NoteDetailPage /> }
+      ]
+    }
+  ]);
 
   return <RouterProvider router={router} />
   
