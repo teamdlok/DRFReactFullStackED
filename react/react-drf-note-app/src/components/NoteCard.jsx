@@ -1,20 +1,30 @@
 import React from 'react'
 import { MdMarkunread } from "react-icons/md";
 import { FaNoteSticky } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
-const NoteCard = () => {
+const NoteCard = ({note}) => {
+
+    let body = `${note.body.split(" ").slice(0, 20)}`
+
   return (
     <div className="col-md-4 single-note-item all-category">
     <div className="card card-body">
         <span className="side-stick" style={{backgroundColor: "blue"}}></span>
         <FaNoteSticky style={{marginLeft: "auto", color: "blue"}}/>
-        <h5 className="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">Book a Ticket for Movie </h5>
+    
+        <Link to="note-detail" style={{textDecoration: "none", color: "black"}}>
+        <h5 className="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie"> {note.title} </h5>
+        </Link>
+
         <p className="note-date font-12 text-muted">11 March 2009</p>
         <div className="note-content">
-            <p className="note-inner-content text-muted" data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.</p>
+            <p className="note-inner-content text-muted" data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
+                {body} 
+            </p>
         </div>
         <div className="d-flex align-items-center">
-            <a href="/notes-detail">
+            <a href="/note-detail">
             <span className="mr-1"><MdMarkunread style={{fontSize: "25px", cursor:"pointer", color: "blue"}}/></span>
             </a>
             

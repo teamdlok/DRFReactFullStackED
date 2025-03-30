@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_04r8n2953p=!0!#&t++ur4nf-j&07ubl*bj99z5@xmm2=ts$u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'noteapp',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'DRFReactFullStackED.urls'
@@ -72,6 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DRFReactFullStackED.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = [
+"http://localhost:5173", #Наш ip для React, таким образом мы подключаем React и DRF вместе с помощью cors
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
