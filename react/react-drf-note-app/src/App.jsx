@@ -11,12 +11,15 @@ import axios from 'axios'
 const App = () => {
 
   const [notes, setNotes] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    setIsLoading(true)
     axios.get("http://127.0.0.1:8000/notes/")
     .then(res => {
       console.log(res.data)
       setNotes(res.data)
+      setIsLoading(false)
     })
     .catch(err => {
       console.log(err.message)
@@ -30,7 +33,7 @@ const App = () => {
       children: [
         {
           index: true,
-          element: <HomePage notes={notes} />,
+          element: <HomePage notes={notes} loading={isLoading}/>,
           loader: async () => {
             const response = await axios.get("http://127.0.0.1:8000/notes/");
             return response.data;
@@ -38,7 +41,7 @@ const App = () => {
         },
         { path: "add-note", element: <AddNotePage /> },
         { path: "edit-note/:id", element: <EditNotePage /> },
-        { path: "note-detail/:id", element: <NoteDetailPage /> }
+        { path: "notes/:slug", element: <NoteDetailPage /> }
       ]
     }
   ]);
