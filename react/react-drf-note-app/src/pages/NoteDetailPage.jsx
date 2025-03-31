@@ -6,12 +6,17 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FormatDate } from '../components/FormatDate';
+import Modal from '../components/Modal';
 
-const NoteDetailPage = () => {
+const NoteDetailPage = ({deleteNote}) => {
 
   const [note, setNote] = useState({})
-
   const {slug} = useParams()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen)
+  }
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/notes/${slug}`)
@@ -36,7 +41,7 @@ const NoteDetailPage = () => {
       <Link to={`/edit-note/${slug}`}>
       <button className="btn btn-primary"><FiEdit /><span>Edit</span></button>
       </Link>
-      <button className="btn btn-danger"><BiSolidTrashAlt /><span>Delete</span></button>
+      <button className="btn btn-danger" onClick={handleIsOpen}><BiSolidTrashAlt /><span>Delete</span></button>
     </span>
     <p className="description">
      {note.body}
@@ -47,7 +52,7 @@ const NoteDetailPage = () => {
     
 
   </div>
-  {/* <Modal /> */}
+  {isOpen && <Modal handleIsOpen={handleIsOpen} deleteNote={deleteNote} slug={slug}/>}
   </>
   )
 }
