@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import "./AddNotePages.css"
+import { useNavigate } from 'react-router-dom'
 
 const AddNotePage = ({addNote}) => {
 
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
   const [category, setCategory] = useState("")
+
+  const navigate = useNavigate()
 
   const newNote = {
     title:title,
@@ -14,11 +17,12 @@ const AddNotePage = ({addNote}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault
+    e.preventDefault()
     if(!title && !body && !category){
       return;
     }
     addNote(newNote)
+    navigate("/")
     console.log(newNote)
 
     }
@@ -58,7 +62,7 @@ const AddNotePage = ({addNote}) => {
         Note's category
       </label>
     <select className="form-select" aria-label="Default select example" value={category} style={{height: "40px"}} onChange={(e) => setCategory(e.target.value)}>
-        <option selected>Pick a category</option>
+        <option value="">Pick a category</option>
         <option value="BUSINESS">Business</option>
         <option value="PERSONAL">Personal</option>
         <option value="IMPORTANT">Important</option>

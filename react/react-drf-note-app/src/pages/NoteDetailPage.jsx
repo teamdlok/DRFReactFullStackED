@@ -3,7 +3,7 @@ import "./NoteDetailPages.css"
 import { FiEdit } from "react-icons/fi";
 import { BiSolidTrashAlt } from "react-icons/bi";
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FormatDate } from '../components/FormatDate';
 
@@ -33,7 +33,9 @@ const NoteDetailPage = () => {
     <p className="note-date font-12 text-muted me-5">updated: {FormatDate(note.created)}</p>
     </span>
     <span className="button-group">
+      <Link to={`/edit-note/${slug}`}>
       <button className="btn btn-primary"><FiEdit /><span>Edit</span></button>
+      </Link>
       <button className="btn btn-danger"><BiSolidTrashAlt /><span>Delete</span></button>
     </span>
     <p className="description">
