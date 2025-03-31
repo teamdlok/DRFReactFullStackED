@@ -26,6 +26,20 @@ const App = () => {
     })
   }, [])
 
+
+  const addNote = (data) => {
+    axios.post("http://127.0.0.1:8000/notes/", data)
+    .then(res => {
+      console.log(res.data)
+    })
+
+    .catch(err => {
+      console.log(console.log(err.message))
+    })
+
+  }
+
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -39,7 +53,7 @@ const App = () => {
             return response.data;
           }
         },
-        { path: "add-note", element: <AddNotePage /> },
+        { path: "add-note", element: <AddNotePage addNote={addNote}/> },
         { path: "edit-note/:id", element: <EditNotePage /> },
         { path: "notes/:slug", element: <NoteDetailPage /> }
       ]

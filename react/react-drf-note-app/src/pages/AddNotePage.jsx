@@ -1,19 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./AddNotePages.css"
 
-const AddNotePage = () => {
+const AddNotePage = ({addNote}) => {
+
+  const [title, setTitle] = useState("")
+  const [body, setBody] = useState("")
+  const [category, setCategory] = useState("")
+
+  const newNote = {
+    title:title,
+    body: body,
+    category: category
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault
+    if(!title && !body && !category){
+      return;
+    }
+    addNote(newNote)
+    console.log(newNote)
+
+    }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit} >
     <h5>Add New Note</h5>
     <div className="mb-3">
       <label htmlFor="exampleFormControlInput1" className="form-label">
         Title
       </label>
       <input
-        type="email"
         className="form-control"
         id="exampleFormControlInput1"
         placeholder="Enter note's title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
     </div>
 
@@ -26,6 +48,8 @@ const AddNotePage = () => {
         id="exampleFormControlTextarea1"
         rows={4}
         placeholder="Enter note's content"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
       ></textarea>
     </div>
 
@@ -33,11 +57,11 @@ const AddNotePage = () => {
     <label htmlFor="exampleFormControlTextarea1" className="form-label">
         Note's category
       </label>
-    <select className="form-select" aria-label="Default select example" style={{height: "40px"}}>
+    <select className="form-select" aria-label="Default select example" value={category} style={{height: "40px"}} onChange={(e) => setCategory(e.target.value)}>
         <option selected>Pick a category</option>
-        <option value="1">Business</option>
-        <option value="2">Personal</option>
-        <option value="3">Important</option>
+        <option value="BUSINESS">Business</option>
+        <option value="PERSONAL">Personal</option>
+        <option value="IMPORTANT">Important</option>
       </select>
     </div>
 
