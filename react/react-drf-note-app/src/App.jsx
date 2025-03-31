@@ -13,16 +13,32 @@ const App = () => {
 
   const [notes, setNotes] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [searchText, setSearchText] = useState("")
   const [filterText, setFilterText] = useState("")
 
   const handleFilterText = (val) => {
     setFilterText(val);
   };
 
+  const handleSearchText = (val) => {
+    setSearchText(val)
+  }
+
   const filteredNotes = filterText === "BUSINESS" ? notes.filter(note => note.category=="BUSINESS") 
   : filterText === "PERSONAL" ? notes.filter(note => note.category=="PERSONAL")
   : filterText === "IMPORTANT" ? notes.filter(note => note.category=="IMPORTANT")
   : notes 
+
+    useEffect(() => {
+      axios.get(`http://127.0.0.1:8000/notes-search/?search=${searchText}`)
+      .then(res => {
+        console.log(res.data)
+        setNotes(res.data)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+    }, [searchText])
 
   useEffect(() => {
     setIsLoading(true)
@@ -74,7 +90,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />,
+      element: <MainLayout searchText={searchText} handleSearchText={handleSearchText}/>,
       children: [
         {
           index: true,
